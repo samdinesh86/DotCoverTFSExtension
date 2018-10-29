@@ -1,0 +1,102 @@
+{
+    "id": "0bedf2d6-3f76-456e-870c-0b46ea13eee5",
+    "name": "DotCover Code Coverage",
+    "friendlyName": "DotCover Code Coverage",
+    "description": "Run DotCover commandline to measure code coverage",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "runsOn": [
+        "Agent",
+        "DeploymentGroup"
+    ],
+    "author": "Dinesh P",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 17
+    },
+    "minimumAgentVersion": "1.95.0",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
+    "instanceNameFormat": "DotCover Analysis $(message)",
+    "inputs": [
+        {
+            "name": "TestAssembliesDirectory",
+            "type": "filepath",
+            "label": "Test Assemblies Directory",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Enter the test assemblies directory"
+        },
+        {
+            "name": "TestAssemblies",
+            "type": "string",
+            "label": "Test Assemblies",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Enter the test assemblies with comma / use wild card *.Tests.dll"
+        },       
+        {
+            "name": "TestResultDirectory",
+            "type": "filepath",
+            "label": "Test Results Directory",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Directory to store the results"
+        },
+        {
+            "name": "CustomexcludedAssemblies",
+            "type": "string",
+            "label": "ExcludedAssemblies",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "+:module=*;class=*;function=*;-:module=*Test*;-:module=*Utility*;",
+            "groupName": "advanced"
+        },
+        {
+            "name": "ReportType",
+            "type": "pickList",
+            "label": "Report Type",
+            "defaultValue": "HTML",
+            "required": false,
+            "helpMarkDown": "A type of the report. XML by default",
+            "options": {
+                "HTML": "HTML",
+                "XML": "XML"
+            },
+            "groupName": "advanced"
+        },
+        {
+            "name": "CustomVSTestPath",
+            "type": "filepath",
+            "label": "VSTest Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Override default VStest path",
+            "groupName": "advanced"
+        },
+        {
+            "name": "CustomDotCoverPath",
+            "type": "filepath",
+            "label": "DotCover.exe path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Enter the dotcover.exe path C:\\BuildTools\\dotCover.2018.1",
+            "groupName": "advanced"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "analysis.ps1"
+        }
+    }
+}

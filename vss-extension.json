@@ -1,0 +1,40 @@
+{
+    "manifestVersion": 1,
+    "id": "DotCoverCodeCoverage",
+    "publisher": "samdinesh86",
+    "version": "1.0.17",
+    "name": "DotCover Code Coverage",
+    "description": "Run DotCover commandline to measure code coverage",
+    "public": false,
+    "categories": ["Build and release"],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "icons": {
+        "default": "dotcover-logo.png"
+    },
+    "contributions": [
+        {
+            "id": "custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "buildtasks"
+            }
+        }
+    ],
+    "files": [
+        {
+            "path": "buildtasks"
+        },
+        {
+            "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "lib"
+        }
+    ]
+}
