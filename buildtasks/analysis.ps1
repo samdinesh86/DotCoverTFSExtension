@@ -1,6 +1,5 @@
 [CmdletBinding()]
 param()
-    
 Trace-VstsEnteringInvocation $MyInvocation
 try {
     [string] $TestAssembliesDirectory = Get-VstsInput -Name TestAssembliesDirectory		
@@ -52,14 +51,18 @@ try {
                 $dotCoverTargetArguments += @($testDll.FullName)	
             }    
         }else{
-            $dotCoverTargetArguments += $InlcudeAssemblies -split ','
+            $assemblies += $InlcudeAssemblies -split ','
+            foreach ($assembly in $assemblies) { 	
+                $testDll = Get-ChildItem $TestAssembliesDirectory -File -include "*.dll" -Recurse| Where-Object { $_.Name -eq $assembly } | Select-Object
+                $dotCoverTargetArguments += @($testDll.FullName)	
+            }    
         }
       
         Write-Host "Coverage with dotCover Started"
         Write-Host $dotCoverTargetArguments
         cd $DotCoverPath
 	 	.\dotcover.exe cover /TargetExecutable="$VstestPath" /Filters="$excludedAssemblies" /TargetWorkingDir="$TestAssembliesDirectory" /TargetArguments="$dotCoverTargetArguments" /Output="$TestResultsDirectory\CoverageReport.dcvr" /LogFile="$TestResultsDirectory\DotCoverlog.txt" 
-        .\dotcover.exe report /Source="$TestResultsDirectory\CoverageReport.dcvr" /Output="$TestResultsDirectory\CoverageReport."+$ReportType /ReportType=$ReportType
+        .\dotcover.exe report /Source="$TestResultsDirectory\CoverageReport.dcvr" /Output="$TestResultsDirectory\CoverageReport."$($ReportType.ToLower()) /ReportType=$ReportType
         Write-Host "Finished running dotCover"
         exit 0
     }
