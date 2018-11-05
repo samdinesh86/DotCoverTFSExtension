@@ -9,7 +9,7 @@ try {
     [string] $CustomexcludedAssemblies = Get-VstsInput -Name ExcludedAssemblies 
     [string] $InlcudeAssemblies = Get-VstsInput -Name TestAssemblies
     [string] $ReportType = Get-VstsInput -Name ReportType
-
+    
     $DotCoverPath = "C:\BuildTools\dotCover.2018.1"
     $VSTestPath = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
     $excludedAssemblies ="+:module=*;class=*;function=*;-:module=*Test*;-:module=*Utility*;"
@@ -57,12 +57,16 @@ try {
                 $dotCoverTargetArguments += @($testDll.FullName)	
             }    
         }
-      
+        if($ReportType -eq "XML"){
+           $OutputFormat = "DetailedXML"
+        }else{
+            $OutputFormat = "HTML"
+        }
         Write-Host "Coverage with dotCover Started"
         Write-Host $dotCoverTargetArguments
         cd $DotCoverPath
 	 	.\dotcover.exe cover /TargetExecutable="$VstestPath" /Filters="$excludedAssemblies" /TargetWorkingDir="$TestAssembliesDirectory" /TargetArguments="$dotCoverTargetArguments" /Output="$TestResultsDirectory\CoverageReport.dcvr" /LogFile="$TestResultsDirectory\DotCoverlog.txt" 
-        .\dotcover.exe report /Source="$TestResultsDirectory\CoverageReport.dcvr" /Output="$TestResultsDirectory\CoverageReport."$($ReportType.ToLower()) /ReportType=$ReportType
+        .\dotcover.exe report /Source="$TestResultsDirectory\CoverageReport.dcvr" /Output="$TestResultsDirectory\CoverageReport."$($ReportType.ToLower()) /ReportType=$OutputFormat
         Write-Host "Finished running dotCover"
         exit 0
     }

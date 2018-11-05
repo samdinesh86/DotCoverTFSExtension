@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "DotCoverCodeCoverage",
     "publisher": "samdinesh86",
-    "version": "1.0.28",
+    "version": "1.0.29",
     "name": "DotCover Code Coverage",
     "description": "Run DotCover commandline to measure code coverage",
     "public": false,
