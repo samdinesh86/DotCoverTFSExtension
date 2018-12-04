@@ -65,7 +65,7 @@ try {
         Write-Host "Coverage with dotCover Started"
         Write-Host $dotCoverTargetArguments
         cd $DotCoverPath
-	 	.\dotcover.exe cover /TargetExecutable="$VstestPath" /Filters="$excludedAssemblies" /TargetWorkingDir="$TestAssembliesDirectory" /TargetArguments="$dotCoverTargetArguments" /Output="$TestResultsDirectory\CoverageReport.dcvr" /LogFile="$TestResultsDirectory\DotCoverlog.txt" 
+	 	.\dotcover.exe cover /TargetExecutable="$VstestPath" /Filters="$excludedAssemblies" /TargetWorkingDir="$TestAssembliesDirectory" /TargetArguments="$dotCoverTargetArguments" /Output="$TestResultsDirectory\CoverageReport.dcvr" /LogFile="$TestResultsDirectory\DotCoverlog.txt" LogLevel=Trace 
         .\dotcover.exe report /Source="$TestResultsDirectory\CoverageReport.dcvr" /Output="$TestResultsDirectory\CoverageReport."$($ReportType.ToLower()) /ReportType=$OutputFormat
         Write-Host "Finished running dotCover"
         exit 0
